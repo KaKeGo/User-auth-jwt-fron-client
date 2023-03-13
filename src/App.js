@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-function App() {
+import { checkAuth } from 'features/user'
+
+import HomePage from 'containers/HomePage'
+import LoginPage from 'containers/LoginPage'
+import RegisterPage from 'containers/RegisterPage'
+import DashboardPage from 'containers/DashboardPage'
+
+
+
+const App = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(checkAuth())
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route exact path='/' element={<HomePage />}/>
+        <Route exact path='/login' element={<LoginPage />}/>
+        <Route exact path='/register' element={<RegisterPage />}/>
+        <Route exact path='/dashboard' element={<DashboardPage />}/>
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
